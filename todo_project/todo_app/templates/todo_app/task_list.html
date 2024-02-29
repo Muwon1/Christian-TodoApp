@@ -1,6 +1,9 @@
 {% if request.user.is_authenticated %}
 <p> {{request.user}} </p>
-<a href="{% url 'logout'%"> Logout </a>
+<form method = "POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type = "submit"> logout </button>
+</form>
 {% else %}
 <a href="{% url 'login'%}"> Login </a>
 {% endif %}
