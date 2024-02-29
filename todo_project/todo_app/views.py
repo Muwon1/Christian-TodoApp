@@ -14,7 +14,6 @@ class TaskDetail(DetailView):
     model = Task
     context_object_name = 'task'
 
-
 class TaskCreate(CreateView):
     model = Task
     fields = '__all__'
