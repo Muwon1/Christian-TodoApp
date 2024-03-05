@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+    <html>
+        <head>
+            <meta charset = "utf-8">
+            <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+            <title> To Do Application </title>
+            <meta name = "description" content="">
+            <meta name = "viewport" content = "width=device-width, initial-scale =1">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+
+
+            <style>
+                body{
+
+                    background-color: #FAFAFA;
+                    font-family: Merriweather;
+                    padding-top: 50px;
+                    
+
+
+                }
+
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6,
+                    {
+
+                        font-family: 'Raleway', sans-serif
+
+
+                    }
+                    
+
+
+                .container{
+
+                    max-width: 550px
+                    margin: auto;
+                    background-color: #fff;
+                    -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+                    boxshadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+
+                }
+
+
+
+                .header-bar {
+                    display: flex;
+                    justify-contnet: space-between;
+                    color: #fff;
+                    padding: 10px;
+                    border-radius: 5px 5px 0 0;
+                    background: linear-gradient(90deg, #EEA390 0%, #EB796F 43%, #EB796F 100%)
+
+
+                }
+
+                .HEADER-BAR a{
+
+                    color: rgb(247m 247, 247);
+                    text-decoration: none;
+
+
+
+
+                }
+                
+
+            </style>    
+        </head>
+        
+        <body>
+
+            
+            <div class= "container">
+                {% block content %}
+
+                {% endblock content %}
+
+            </div>
+        </body>
+    </html>
