@@ -27,6 +27,12 @@ class TaskList(LoginRequiredMixin, ListView):
             context = super().get_context_data(**kwargs)
             context['object_list'] = context['object_list'].filter(user=self.request.user)
             context['count'] = context['object_list'].filter(complete=False).count()
+    
+    
+             search_input = self.request.GET.get('search-area') or ''
+                if search_input:
+                    context['object_list'] = context['object_list'].filter(title__startswith=search_input)
+                context['search_input'] = search_input
             return context
 class RegisterPage(FormView):
     template_name ='todo_app/register.html'
