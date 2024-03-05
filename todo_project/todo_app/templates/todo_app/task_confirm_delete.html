@@ -1,3 +1,7 @@
+{% extends "todo_app/main.html" %}
+{% block content%}
+
+
 
 <a href = "{% url 'tasks'%}"></a>
 <form method = "POST">
@@ -8,3 +12,6 @@
 <input type = "submit" value="Delete" />
 
 </form>
+
+
+{% endblock content%}
