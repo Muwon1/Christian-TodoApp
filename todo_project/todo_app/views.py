@@ -23,7 +23,19 @@ class TaskList(LoginRequiredMixin, ListView):
     model = Task 
     template_name = 'todo_app/task_list.html'
     context_object_name = 'tasks'
-        def get_context_data(self, **kwargs):
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            queryset = queryset.filter(title__startswith=search_input)
+
+        return queryset
+
+       
+    def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
             context['object_list'] = context['object_list'].filter(user=self.request.user)
             context['count'] = context['object_list'].filter(complete=False).count()
