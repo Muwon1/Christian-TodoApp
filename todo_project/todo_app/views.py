@@ -85,3 +85,17 @@ class DeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     context_object_name = 'tasks'
     success_url = reverse_lazy('tasks')
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]  
+
+    def list(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            tasks = self.get_queryset()
+            serializer = self.get_serializer(tasks, many=True)
+            return Response(serializer.data)
+        else:
+            return Response({'detail': 'You need to be logged in to access this endpoint.'}, status=401)
+
