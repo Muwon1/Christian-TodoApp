@@ -34,39 +34,36 @@ class TaskList(LoginRequiredMixin, ListView):
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             queryset = queryset.filter(title__startswith=search_input)
-
         return queryset
-
-       
+  
     def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-            context['object_list'] = context['object_list'].filter(user=self.request.user)
-            context['count'] = context['object_list'].filter(complete=False).count()
-    
-    
-             search_input = self.request.GET.get('search-area') or ''
-                if search_input:
-                    context['object_list'] = context['object_list'].filter(title__startswith=search_input)
-                context['search_input'] = search_input
+        context = super().get_context_data(**kwargs)
+        context['object_list'] = context['object_list'].filter(user=self.request.user)
+        context['count'] = context['object_list'].filter(complete=False).count()
+        
+    search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['object_list'] = context['object_list'].filter(title__startswith=search_input)
+            context['search_input'] = search_input
             return context
+
 class RegisterPage(FormView):
     template_name ='todo_app/register.html'
     form_class = UserCreationForm
     redirect_authenticated_user = True
     success_url = reverse_lazy('tasks')
     
-        def form_valid(self, form):
-            user = form.save()
-            if user is not None:
-            login(self.request, user)
-            return super(RegisterPage, self).form_valid(form)
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+        login(self.request, user)
+        return super(RegisterPage, self).form_valid(form)
     
-        def get(self, *args, **kwargs):
-            if self.request.user.is_authenticated:
-            return redirect('tasks')
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+        return redirect('tasks')
         return super(RegisterPage, self).get(*args, **kwargs)
 
-    
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     context_object_name = 'task'
@@ -75,9 +72,10 @@ class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = ['title', 'description', 'complete']
     success_url = reverse_lazy('tasks')
-        def form_valid(self, form):
-            form.instance.user = self.request.user
-            return super(TaskCreate, self).form_valid(form)
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(TaskCreate, self).form_valid(form)
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):    
     model = Task
