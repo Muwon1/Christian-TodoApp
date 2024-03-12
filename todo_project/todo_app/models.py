@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Task(models.Model):
@@ -15,3 +16,9 @@ class Task(models.Model):
 
     class Meta:
         ordering = ['complete']
+
+
+class CustomUser(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    age = models.PositiveIntegerField()
