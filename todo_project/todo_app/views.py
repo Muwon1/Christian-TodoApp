@@ -18,6 +18,8 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Task
 from .serializers import TaskSerializer
 from rest_framework.response import Response
+from .models import CustomUser
+from .serializers import CustomUserSerializer
 
 
 class CustomLoginView(LoginView):
@@ -112,5 +114,10 @@ class TaskViewSet(viewsets.ModelViewSet):
             return Response({
                 'detail': 'You need to be logged in to access an endpoint'},
                 status=401)
+
+
+class CustomUserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
 
 
