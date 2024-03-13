@@ -38,10 +38,12 @@ class RegisterPage(FormView):
     success_url = reverse_lazy('tasks')
 
     def form_valid(self, form):
-        user = form.save()
-        if user is not None:
-            login(self.request, user)
-            return super(RegisterPage, self).form_valid(form)
+        user = form.save(commit=False)
+        age = self.request.POST.get('age')
+        user.age = age
+        user.save()
+        login(self.request, user)
+        return super(RegisterPage, self).form_valid(form)
 
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
@@ -76,16 +78,20 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     context_object_name = 'task'
     template_name = 'todo_app/task_detail.html'
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = ['title', 'description', 'complete']
     success_url = reverse_lazy('tasks')
 
-
-def form_valid(self, form):
-    form.instance.user = self.request.user
-    return super(TaskCreate, self).form_valid(form)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        print("User associated with task:", form.instance.user)
+        return super(TaskCreate, self).form_valid(form)
 
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
