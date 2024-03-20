@@ -2,68 +2,98 @@
 
 {% block content %}
 <div class="header-bar">
-    <h1>Register</h1>
+  <h1>Register</h1>
 </div>
 
 <div class="card-body">
-    <form method="post">
-        {% csrf_token %}
-        <div>
-            <label for="id_username">{{ form.username.label }}</label>
-            {{ form.username }}
-        </div>
-        <div>
-            <label for="id_password1">{{ form.password1.label }}</label>
-            {{ form.password1 }}
-        </div>
-        <div>
-            <label for="id_password2">{{ form.password2.label }}</label>
-            {{ form.password2 }}
-        </div>
-        <div>
-            <label for="id_age">Age:</label>
-            <input type="number" id="id_age" name="age" min="1" required>
-        </div>
-        <button style="margin-top:10px;" class="input-button" type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
-
-    
-    <div id="password-popup" class="popup" style="display: none;"></div>
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      <label for="id_username">{{ form.username.label }}</label>
+      <br>
+      {{ form.username }}
+    </div>
+    <div style="margin-top: 20px;">
+      <label for="id_password1">{{ form.password1.label }}</label>
+      <br>
+      <input type="password" id="id_password1" name="password1" required>
+    </div>
+    <div style="margin-top: 20px;">
+      <label for="id_password2">{{ form.password2.label }}</label>
+      <br>
+      <input type="password" id="id_password2" name="password2" required>
+    </div>
+    <p class="error-message" id="password-error" style="color: red; margin-top: 10px; display: none;"></p>
+    <button style="margin-top:20px;" class="input-button" type="submit">Register</button>
+  </form>
+  <p style="margin-top: -38px; text-align: center;">Already have an account? <a href="{% url 'login' %}" style="vertical-align: middle;">Login</a></p>
 </div>
 
-
 <script>
+function togglePasswordVisibility() {
+  var passwordField = document.getElementById("id_password1");
+  var eyeIcon = document.getElementById("showPassword");
+  if (passwordField.type === "password") {
+    passwordField.type = "text";
+    eyeIcon.textContent = "️";
+  } else {
+    passwordField.type = "password";
+    eyeIcon.textContent = "️";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
-    const passwordField = document.getElementById("id_password1");
-    const usernameField = document.getElementById("id_username");
-    const ageField = document.getElementById("id_age");
-    const form = document.querySelector("form");
-    const popupContainer = document.getElementById("password-popup");
+  const passwordField = document.getElementById("id_password1");
+  const usernameField = document.getElementById("id_username");
+  const form = document.querySelector("form");
+  const errorContainer = document.getElementById("password-error");
+  const errorMessage = localStorage.getItem("passwordError");
 
-    form.addEventListener("submit", function(event) {
-        const password = passwordField.value;
-        const username = usernameField.value;
+  if (errorMessage) {
+    errorContainer.textContent = errorMessage;
+    errorContainer.style.display = "block";
+  }
 
-        let errorMessage = "";
+  form.addEventListener("submit", function(event) {
+    const password = passwordField.value;
+    const username = usernameField.value;
 
-        if (password.length < 8) {
-            errorMessage = "Password must be at least 8 characters long.";
-        } else if (password.toLowerCase().includes(username.toLowerCase())) {
-            errorMessage = "Password is too similar to the username.";
-        } else if (/^\d+$/.test(password)) {
-            errorMessage = "Password cannot be entirely numeric.";
-        }
+    let errorMessage = "";
 
-        if (errorMessage) {
-            
-            popupContainer.textContent = errorMessage;
-            popupContainer.style.display = "block";
-            event.preventDefault();  
-        }
-    });
+    if (password.length < 8) {
+      errorMessage = "Password must be at least 8 characters long.";
+    } else if (password.toLowerCase().includes(username.toLowerCase())) {
+      errorMessage = "Password is too similar to the username.";
+    } else if (/^\d+$/.test(password)) {
+      errorMessage = "Password cannot be entirely numeric.";
+    }
+
+    if (errorMessage) {
+      errorContainer.textContent = errorMessage;
+      errorContainer.style.display = "block";
+      localStorage.setItem("passwordError", errorMessage);
+      setTimeout(function() {
+        location.reload();
+      }, 2000); // Refresh the page after 2 seconds
+      event.preventDefault();
+    } else {
+      localStorage.removeItem("passwordError");
+    }
+  });
 });
 </script>
-{% endblock %}
 
+<style>
+  .register-link-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .register-link-container p {
+    margin: 0;
+  }
+</style>
+
+{% endblock %}
 
