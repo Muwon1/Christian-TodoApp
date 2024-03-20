@@ -9,24 +9,26 @@
   <form method="post">
     {% csrf_token %}
     <div>
-      <label for="id_username">{{ form.username.label }}</label>
+      <label for="id_username">{{ form.username.label }}:</label>
       <br>
       {{ form.username }}
     </div>
     <div style="margin-top: 20px;">
-      <label for="id_password1">{{ form.password1.label }}</label>
+      <label for="id_password1">{{ form.password1.label }}:</label>
       <br>
       <input type="password" id="id_password1" name="password1" required>
     </div>
     <div style="margin-top: 20px;">
-      <label for="id_password2">{{ form.password2.label }}</label>
+      <label for="id_password2">{{ form.password2.label }}:</label>
       <br>
       <input type="password" id="id_password2" name="password2" required>
     </div>
-    <p class="error-message" id="password-error" style="color: red; margin-top: 10px; display: none;"></p>
+    <p class="error-message" id="password-error" style="color: red; margin-top: 12px; font-size: 10px; display: none;"></p>
     <button style="margin-top:20px;" class="input-button" type="submit">Register</button>
   </form>
-  <p style="margin-top: -38px; text-align: center;">Already have an account? <a href="{% url 'login' %}" style="vertical-align: middle;">Login</a></p>
+  <div class="register-link-container" style="margin-top: -35px;">
+    <p style="margin: 0;">Already have an account? <a href="{% url 'login' %}" style="vertical-align: middle;">Login</a></p>
+  </div>
 </div>
 
 <script>
@@ -74,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
       localStorage.setItem("passwordError", errorMessage);
       setTimeout(function() {
         location.reload();
-      }, 2000); // Refresh the page after 2 seconds
+      }, 2000); 
       event.preventDefault();
     } else {
       localStorage.removeItem("passwordError");
@@ -87,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function() {
   .register-link-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
   }
 
   .register-link-container p {
