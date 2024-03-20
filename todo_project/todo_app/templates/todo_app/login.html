@@ -1,17 +1,29 @@
 {% extends "todo_app/main.html" %}
 {% block content%}
 
-<div class="header-bar">
-    <h1>Login</h1>
+<div class="header-bar" style="display: flex; justify-content: center; align-items: center; background-color: #4a90e2; color: white; height: 80px;">
+    <h1 style="font-family: 'Arial', sans-serif; font-size: 60px;">Login</h1>
 </div>
 
+
 <div class="card-body">
-    <form method="POST">
+    <form method="POST" style="text-align: center;">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div style="text-align: left;"> 
+            {{ form.username.label_tag }}<br>
+            {{ form.username }}<br>
+            {{ form.password.label_tag }}<br>
+            {{ form.password }}<br>
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <p style="color: red;">{{ message }}</p> 
+                {% endif %}
+            {% endfor %}
+        </div>
+        <br>
         <input class="input-button" type="submit" value="Login">
     </form>
-    <div style="text-align: left; margin-top: 20px;">
+    <div style="text-align: center; margin-top: 20px;">
         <p>Don't have an account? <a href="{% url 'register' %}" style="text-decoration: none;">Register</a></p>
     </div>
 </div>
