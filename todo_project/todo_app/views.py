@@ -20,6 +20,7 @@ from .serializers import TaskSerializer
 from rest_framework.response import Response
 from .models import CustomUser
 from .serializers import CustomUserSerializer
+from django.contrib import messages
 
 
 class CustomLoginView(LoginView):
@@ -29,6 +30,14 @@ class CustomLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('tasks')
+
+    def form_invalid(self, form):
+        messages.error(
+            self.request,
+            "Your password is wrong. "
+            "Please try again."
+        )
+        return super().form_invalid(form)
 
 
 class RegisterPage(FormView):
