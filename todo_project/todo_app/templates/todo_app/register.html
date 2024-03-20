@@ -1,9 +1,10 @@
 {% extends 'todo_app/main.html' %}
 
 {% block content %}
-<div class="header-bar">
-  <h1>Register</h1>
+<div class="header-bar" style="display: flex; justify-content: center; align-items: center; background-color: #4a90e2; color: white; height: 80px;">
+    <h1 style="font-family: 'Arial', sans-serif; font-size: 60px;">Register</h1>
 </div>
+
 
 <div class="card-body">
   <form method="post">
@@ -17,16 +18,18 @@
       <label for="id_password1">{{ form.password1.label }}:</label>
       <br>
       <input type="password" id="id_password1" name="password1" required>
+      <p class="error-message" id="password-error" style="color: red; margin-top: 5px; font-size: 10px; display: none;"></p>
     </div>
     <div style="margin-top: 20px;">
       <label for="id_password2">{{ form.password2.label }}:</label>
       <br>
       <input type="password" id="id_password2" name="password2" required>
     </div>
-    <p class="error-message" id="password-error" style="color: red; margin-top: 12px; font-size: 10px; display: none;"></p>
-    <button style="margin-top:20px;" class="input-button" type="submit">Register</button>
+    <div class="register-button-container" style="margin-top: 20px; text-align: center;">
+      <button class="input-button" type="submit">Register</button>
+    </div>
   </form>
-  <div class="register-link-container" style="margin-top: -35px;">
+  <div class="register-link-container" style="margin-top: 10px; text-align: center;">
     <p style="margin: 0;">Already have an account? <a href="{% url 'login' %}" style="vertical-align: middle;">Login</a></p>
   </div>
 </div>
