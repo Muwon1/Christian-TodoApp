@@ -35,18 +35,6 @@
 </div>
 
 <script>
-function togglePasswordVisibility() {
-  var passwordField = document.getElementById("id_password1");
-  var eyeIcon = document.getElementById("showPassword");
-  if (passwordField.type === "password") {
-    passwordField.type = "text";
-    eyeIcon.textContent = "️";
-  } else {
-    passwordField.type = "password";
-    eyeIcon.textContent = "️";
-  }
-}
-
 document.addEventListener("DOMContentLoaded", function() {
   const passwordField = document.getElementById("id_password1");
   const usernameField = document.getElementById("id_username");
